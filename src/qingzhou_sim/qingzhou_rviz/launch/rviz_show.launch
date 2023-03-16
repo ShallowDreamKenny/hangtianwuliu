@@ -1,0 +1,4 @@
+<launch>
+    <arg name="rvizconfig" default="$(find qingzhou_rviz)/config/qingzhou_sim.rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" output="screen"/>
+</launch>

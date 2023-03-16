@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<launch>
+  <master auto="start"/>
+
+
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	  
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="planner_frequency" value="3.0" />
+    <param name="planner_patience" value="5.0" />
+
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+    <param name="controller_frequency" value="7.0" />
+    <param name="controller_patience" value="0.2" />
+
+    <rosparam file="$(find qingzhou_nav)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find qingzhou_nav)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find qingzhou_nav)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find qingzhou_nav)/params/global_costmap_params.yaml" command="load" />
+    
+    <rosparam file="$(find qingzhou_nav)/params/teb_local_planner_params.yaml" command="load" />
+    <!-- <rosparam file="$(find qingzhou_nav)/params/costmap_converter_params.yaml" command="load" /> -->
+    <rosparam file="$(find qingzhou_nav)/params/global_planner_params.yaml" command="load" />
+    <!-- <remap from="/odom" to="/odom_ekf"/>  -->
+    <remap from="/cmd_vel" to="/qingzhou/ackermann_steering_controller/cmd_vel"/> 
+  </node>
+
+  <!-- <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/tebtest.rviz"/> -->
+
+
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_mapping)/maps/racemap.yaml" output="screen"/>
+
+    <include file="$(find qingzhou_nav)/launch/amcl.launch" />
+
+    <include file="$(find qingzhou_nav)/launch/qingzhou_move_base_teb.launch" />
+
+    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav.rviz"/>
+
+</launch>
