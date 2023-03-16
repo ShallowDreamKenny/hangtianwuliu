@@ -1,21 +1,20 @@
 # qingzhou
-sudo apt install ros-melodic-ackermann-steering-controller
-sudo apt-get install ros-<distro>-cartographer*
-sudo apt-get install -y \
-cmake \
-g++ \
-git \
-google-mock \
-libboost-all-dev \
-libcairo2-dev \
-libeigen3-dev \
-libgflags-dev \
-libgoogle-glog-dev \
-liblua5.2-dev \
-libsuitesparse-dev \
-libwebp-dev \
-ninja-build \
-protobuf-compiler \
+sudo apt install ros-melodic-ackermann-steering-controller      
+sudo apt-get install ros-<distro>-cartographer*     
+sudo apt-get install -y 
+cmake 
+g++ 
+git 
+google-mock 
+libboost-all-dev 
+libcairo2-dev 
+libeigen3-dev libgflags-dev 
+libgoogle-glog-dev 
+liblua5.2-dev 
+libsuitesparse-dev 
+libwebp-dev 
+ninja-build 
+protobuf-compiler 
 python-sphinx
 
 轻舟仿真建立二维栅格地图
