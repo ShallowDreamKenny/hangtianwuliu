@@ -1,6 +1,6 @@
 # qingzhou
 sudo apt install ros-melodic-ackermann-steering-controller      
-sudo apt-get install ros-<distro>-cartographer*     
+sudo apt-get install ros-(your ros version)-cartographer*     
 sudo apt-get install -y 
 cmake 
 g++ 
