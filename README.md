@@ -17,7 +17,7 @@ ninja-build
 protobuf-compiler 
 python-sphinx
 
-轻舟仿真建立二维栅格地图
+建图
 step1:打开轻舟 gazebo 仿真世界,在工作空间下新建终端:
 roslaunch qingzhou_gazebo qingzhou_bringup.launch
 
