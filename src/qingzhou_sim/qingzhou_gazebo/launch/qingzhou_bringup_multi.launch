@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="model" default="$(find qingzhou_description)/urdf/qingzhou.urdf.xacro"/>
+    <arg name="model" default="$(find qingzhou_description)/urdf/qingzhou_multi.urdf.xacro"/>
     <arg name="robot" default="qingzhou1"/>
     <arg name="namespace" default="/$(arg robot)" />
     <arg name="world_name" value="$(find qingzhou_gazebo)/worlds/playground.world" />
@@ -16,11 +16,13 @@
         <!-- Gazebo  -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" default="$(arg world_name)"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
     </include>
     <group ns="$(arg namespace)">
-
-
-
         <!-- Load the robot description -->
         <param name="robot_description" command="$(find xacro)/xacro $(arg model) namespace:=$(arg namespace) bodyframe:=$(arg namespace) " />
 
@@ -34,12 +36,13 @@
         <node pkg="controller_manager" type="spawner" name="controller_spawner" ns="$(arg namespace)"
             args="joint_state_publisher ackermann_steering_controller"
             output="screen" respawn="false" >
-         <param name="tf_prefix" value="ares1" />
+            <param name="tf_prefix" value="$(arg namespace)" />
          </node>
 
         <!-- Launch  the robot state publisher -->
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
             <param name="publish_frequency" value="50.0"/>
+            <param name="tf_prefix" value="$(arg namespace)" />
         </node>
 
         <!-- Launch a rqt steering GUI for publishing to /qingzhou/steer_drive_controller/cmd_vel -->
@@ -53,17 +56,17 @@
                 -gazebo_namespace /gazebo
                 -x $(arg x) -y $(arg y) -z $(arg z)
                 -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"
-            respawn="false" output="screen" />
+             output="screen" />
 
     <!--node pkg="tf" type="static_transform_publisher" name="ydlidar_link_to_laser" args="0.0 0.0 0.0 0.0 1 0  $(arg namespace)/ydlidar_link $(arg namespace)/base_link  20" /-->
     <!--node pkg="tf" type="static_transform_publisher" name="camera_link_to_bot" args="0.0 0.0 0.0 3.14 0  0    $(arg namespace)/camera_link  $(arg namespace)/base_link  20" /-->
 
-    <node pkg="qingzhou_description" type="gazebo_odometry.py" name="gazebo_odometry" >
-    <remap from="odom" to="$(arg namespace)/odom" />
-    <remap from="/qingzhou/gazebo/link_states" to="gazebo/$(arg namespace)/link_states" />
-    </node>
+    <!--node pkg="qingzhou_description" type="gazebo_odometry.py" name="gazebo_odometry" output="screen" >
+        <remap from="odom" to="$(arg namespace)/odom" />
+        <remap from="/qingzhou/gazebo/link_states" to="gazebo/link_states" />
+    </node-->
     </group>
     <!--node pkg="tf" type="static_transform_publisher" name="tf_map1" args="0 0 0.0 0 1 0 world qingzhou1/map 33"/-->
-    <node pkg="tf" type="static_transform_publisher" name="tf_mapodom1" args="0 0 0.0 0 0 0 map qingzhou1/odom  33"/>
-    <node pkg="tf" type="static_transform_publisher" name="tf_odom1" args="0 0 0.0 0 0 0 $(arg namespace)/odom $(arg namespace)/base_link 33"/>
+    <!--node pkg="tf" type="static_transform_publisher" name="tf_mapodom1" args="0 0 0.0 0 0 0 map qingzhou1/odom  33"/-->
+    <!--node pkg="tf" type="static_transform_publisher" name="tf_odom1" args="0 0 0.0 0 0 0 $(arg namespace)/odom $(arg namespace)/base_link 33"/-->
 </launch>

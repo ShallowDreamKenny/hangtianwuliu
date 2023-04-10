@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="model" default="$(find qingzhou_description)/urdf/qingzhou.urdf.xacro"/>
+    <arg name="model" default="$(find qingzhou_description)/urdf/qingzhou_multi.urdf.xacro"/>
     <arg name="robot" default="qingzhou2"/>
     <arg name="namespace" default="/$(arg robot)" />
     <arg name="world_name" value="$(find qingzhou_gazebo)/worlds/playground.world" />
@@ -20,7 +20,7 @@
         <param name="robot_description" command="$(find xacro)/xacro $(arg model) namespace:=$(arg namespace)"/>
 
         <!-- Load ros_controllers configuration parameters -->
-        <rosparam file="$(find qingzhou_control)/config/ctrl_ackermann_steering_controller.yaml" command="load" ns="$(arg namespace)" />
+        <rosparam file="$(find qingzhou_control)/config/ctrl_ackermann_steering_controller_2.yaml" command="load" ns="$(arg namespace)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_gains.yaml" command="load" ns="$(arg namespace)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_joint_state_publisher.yaml" command="load" ns="$(arg namespace)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_qingzhou_hardware_gazebo.yaml" command="load" ns="$(arg namespace)" />
@@ -28,11 +28,14 @@
         <!-- Spawn the controllers -->
         <node pkg="controller_manager" type="spawner" name="controller_spawner" ns="$(arg namespace)"
             args="joint_state_publisher ackermann_steering_controller"
-            output="screen" respawn="false" />
+            output="screen" respawn="false" >
+            <param name="tf_prefix" value="$(arg namespace)" />
+        </node>
 
         <!-- Launch  the robot state publisher -->
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
             <param name="publish_frequency" value="50.0"/>
+            <param name="tf_prefix" value="$(arg namespace)" />
         </node>
 
         <!-- Launch a rqt steering GUI for publishing to /qingzhou/steer_drive_controller/cmd_vel -->
@@ -41,22 +44,22 @@
         </node> -->
 
         <!-- Spawn robot in Gazebo -->
-        <node name="spawn_vehicle" pkg="gazebo_ros" type="spawn_model"
+        <node name="spawn_vehicle2" pkg="gazebo_ros" type="spawn_model"
             args="-urdf -param robot_description -model $(arg namespace)
                 -gazebo_namespace /gazebo
                 -x $(arg x) -y $(arg y) -z $(arg z)
                 -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"
-            respawn="false" output="screen" />
+             output="screen" />
 
     <!--node pkg="tf" type="static_transform_publisher" name="ydlidar_link_to_laser" args="0.0 0.0 0.0 0.0 0 0  /ydlidar_link $(arg namespace)/ydlidar_link  20" />
     <node pkg="tf" type="static_transform_publisher" name="camera_link_to_bot" args="0.0 0.0 0.0 3.14 0  0    /camera_link  $(arg namespace)  20" /-->
 
-    <node pkg="qingzhou_description" type="gazebo_odometry.py" name="gazebo_odometry2"> 
-    <remap from="/odom" to="$(arg namespace)/odom" />
-    <remap from="/qingzhou/gazebo/link_states" to="gazebo/$(arg namespace)/link_states" />
-    </node>
+        <!--node pkg="qingzhou_description" type="gazebo_odometry_2.py" name="gazebo_odometry2">
+        <remap from="/odom" to="$(arg namespace)/odom" />
+        <remap from="/qingzhou/gazebo/link_states" to="gazebo/$(arg namespace)/link_states" />
+        </node-->
     </group>
     <!--node pkg="tf" type="static_transform_publisher" name="tf_map2" args="1 0 0.0 0 1 0 world qingzhou2/map 33"/-->
-    <node pkg="tf" type="static_transform_publisher" name="tf_mapodom2" args="1 0 0.0 0 0 0 map qingzhou2/odom  33"/>
-    <node pkg="tf" type="static_transform_publisher" name="tf_odom2" args="0 0 0.0 0 0 0 $(arg namespace)/odom $(arg namespace)/base_link 33"/>
+    <!--node pkg="tf" type="static_transform_publisher" name="tf_mapodom2" args="1 0 0.0 0 0 0 map qingzhou2/odom  33"/>
+    <node pkg="tf" type="static_transform_publisher" name="tf_odom2" args="0 0 0.0 0 0 0 $(arg namespace)/odom $(arg namespace)/base_link 33"/-->
 </launch>
