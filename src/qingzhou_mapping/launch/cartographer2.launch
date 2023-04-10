@@ -1,12 +1,12 @@
 
 <launch>
   <param name="/use_sim_time" value="true" />
-  <arg name="robot" default="qingzhou1"/>
+  <arg name="robot" default="qingzhou2"/>
   <arg name="namespace" default="/$(arg robot)" />
-  <node name="cartographer_node$(arg robot)" pkg="cartographer_ros"
+  <node name="$(arg robot)cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
           -configuration_directory $(find qingzhou_mapping)/configuration_files
-          -configuration_basename demo.lua"
+          -configuration_basename demo_2.lua"
       output="screen">
     <remap from="scan" to="$(arg namespace)/scan" />
   </node>
@@ -14,7 +14,7 @@
   <node name="$(arg robot)cartographer_occupancy_grid_node" pkg="cartographer_ros"
       type="cartographer_occupancy_grid_node" args="-resolution 0.05" />
 
-  <node name="$(arg robot)rviz1" pkg="rviz" type="rviz" required="true"
+  <node name="$(arg robot)rviz" pkg="rviz" type="rviz" required="true"
       args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />
 
 </launch>
