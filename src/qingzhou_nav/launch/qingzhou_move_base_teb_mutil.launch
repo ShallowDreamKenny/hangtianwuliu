@@ -2,9 +2,7 @@
 <launch>
   <master auto="start"/>
 
-
-  <arg name="robot" default="qingzhou1"/>
-  <arg name="namespace" default="/$(arg robot)" />
+  <arg name="namespace" default="$(arg namespace)" />
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 	  
     <param name="base_global_planner" value="global_planner/GlobalPlanner" />
@@ -24,8 +22,8 @@
     <rosparam file="$(find qingzhou_nav)/params/teb_local_planner_params_1.yaml" command="load" />
     <!-- <rosparam file="$(find qingzhou_nav)/params/costmap_converter_params.yaml" command="load" /> -->
     <rosparam file="$(find qingzhou_nav)/params/global_planner_params.yaml" command="load" />
-    <remap from="/odom" to="$(arg namespace)/ackermann_steering_controller/odom"/>
-    <remap from="/cmd_vel" to="$(arg namespace)/ackermann_steering_controller/cmd_vel"/>
+    <remap from="odom" to="ackermann_steering_controller/odom"/>
+    <remap from="cmd_vel" to="ackermann_steering_controller/cmd_vel"/>
   </node>
 
   <!-- <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/tebtest.rviz"/> -->

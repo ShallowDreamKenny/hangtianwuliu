@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <launch>
-    <arg name="robot" default="qingzhou1"/>
-    <arg name="namespace" default="/$(arg robot)" />
+    <arg name="namespace" default="$(arg namespace)" />
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 		<!-- Publish scans from best pose at a max of 10 Hz -->
+		<remap from="scan" to="scan"/>
 		<param name="odom_model_type" value="diff"/>
 		<param name="odom_alpha5" value="0.1"/>
 		<param name="transform_tolerance" value="0.2" />
