@@ -27,6 +27,6 @@ roslaunch qingzhou_mapping cartographer.launch
 step3:使用 rqt_robot_steering 控制小车移动,在工作空间下新建终端:
 rosrun rqt_robot_steering rqt_robot_steering
 
-step4:保存地图,在工作空间下新建终端:
-cd qingzhou_simulation/src/qingzhou_mapping/maps/
-rosrun map_server map_saver -f racemap
+step4:保存地图,在工作空间下新建终端:  
+  cd ROS/qingzhou/src/qingzhou_mapping/maps/  
+  rosrun map_server map_saver -f racemap

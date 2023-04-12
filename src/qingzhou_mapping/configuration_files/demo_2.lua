@@ -19,9 +19,9 @@ options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
   map_frame = "map",
-  tracking_frame = "qingzhou1/base_link",
-  published_frame = "qingzhou1/odom",
-  odom_frame = "qingzhou1/odom",
+  tracking_frame = "qingzhou2/base_link",
+  published_frame = "qingzhou2/odom",
+  odom_frame = "qingzhou2/odom",
   provide_odom_frame = false,
   publish_frame_projected_to_2d = false,
 

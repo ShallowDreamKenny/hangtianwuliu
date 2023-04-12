@@ -24,11 +24,11 @@ ackermann_steering_controller:
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
 
     # Top level frame (link) of the robot description
-    base_frame_id: 'qingzhou2/base_link'
+    base_frame_id: 'qingzhou_1/base_link'
 
     # Transform from odom -> base_link
     enable_odom_tf: true
-    odom_frame_id: 'qingzhou2/odom'
+    odom_frame_id: 'qingzhou_1/odom'
 
     # Set to false if the motor driver provides velocity data. 
     estimate_velocity_from_position: true

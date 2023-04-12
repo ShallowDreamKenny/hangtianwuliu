@@ -2,12 +2,12 @@
 <launch>
 
     <arg name="model" default="$(find qingzhou_description)/urdf/qingzhou_multi.urdf.xacro"/>
-    <arg name="robot" default="qingzhou2"/>
+    <arg name="robot" default="qingzhou_1"/>
     <arg name="namespace" default="/$(arg robot)" />
     <arg name="world_name" value="$(find qingzhou_gazebo)/worlds/playground.world" />
     <arg name="cmd_timeout" default="0.5"/>
     <arg name="x" default="1.0"/>
-    <arg name="y" default="0.0"/>
+    <arg name="y" default="-5.0"/>
     <arg name="z" default="1.0" />
     <arg name="roll" default="0.0"/>
     <arg name="pitch" default="0.0"/>
