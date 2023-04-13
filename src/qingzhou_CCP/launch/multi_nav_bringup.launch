@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find qingzhou_mapping)/maps/racemap.yaml"/>
+  
+  <include file="$(find qingzhou_nav)/launch/multi_0_qingzhou_navigation.launch">
+	  <arg name="map_file" default="$(arg map_file)" />
+  </include>
+  <include file="$(find qingzhou_nav)/launch/multi_1_qingzhou_navigation.launch">
+	  <arg name="map_file" default="$(arg map_file)" />
+  </include>
+  <!--include file="$(find qingzhou_nav)/launch/multi_2_qingzhou_navigation.launch">
+	  <arg name="model" value="$(arg model)" />
+	  <arg name="map_file" default="$(arg map_file)" />
+  </include-->
+
+
+  <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz2" required="true"
+          args="-d $(find qingzhou_nav)/rviz/multi_navigation.rviz"/>
+
+</launch>
