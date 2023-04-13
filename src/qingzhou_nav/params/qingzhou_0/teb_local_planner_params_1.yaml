@@ -1,6 +1,6 @@
 TebLocalPlannerROS:
 
- odom_topic: qingzhou_0/odom
+ odom_topic: gazebo/odom
     
  # Trajectory
   

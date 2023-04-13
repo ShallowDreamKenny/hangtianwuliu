@@ -70,6 +70,7 @@
                 -x $(arg x1) -y $(arg y1) -z $(arg z1)
                 -R $(arg roll1) -P $(arg pitch1) -Y $(arg yaw1)"
               output="screen" />
+
     </group>
     <group ns="$(arg namespace2)">
         <!-- Load the robot description -->
@@ -103,5 +104,8 @@
                 -R $(arg roll2) -P $(arg pitch2) -Y $(arg yaw2)"
               output="screen" />
     </group>
-
+    <node pkg="qingzhou_description" type="gazebo_odometry.py" name="gazebo_odometry" output="screen">
+        <remap from="odom" to="qingzhou_0/gazebo/odom"/>
+        <remap from="odom2" to="qingzhou_1/gazebo/odom"/>
+    </node>
 </launch>
