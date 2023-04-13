@@ -1,29 +1,32 @@
 <launch>
-    <arg name="robot1" default="qingzhou1"/>
-    <arg name="robot2" default="qingzhou2"/>
-    <arg name="namespace1" default="/$(arg robot1)" />
-    <arg name="namespace2" default="/$(arg robot2)" />
+
+    <arg name="namespace1" default="/qingzhou_0" />
+    <arg name="namespace2" default="/qingzhou_1" />
+  
     <group ns="$(arg namespace1)">
-	    <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_mapping)/maps/racemap.yaml" output="screen"/>
-
-
-	    <include file="$(find qingzhou_nav)/launch/amcl_mutil.launch" />
+	  
+<node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_mapping)/maps/racemap.yaml" output="screen"/>
+	    <include file="$(find qingzhou_nav)/launch/amcl_mutil.launch" >
+		<arg name="namespace" default="$(arg namespace1)" />
+        </include>
 
 	    <include file="$(find qingzhou_nav)/launch/qingzhou_move_base_teb_mutil.launch" >
+		<arg name="namespace" default="$(arg namespace1)" />
         </include>
-
-	    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav2.rviz"/>
+<node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_1.rviz"/>
+	    
     </group>
-    <!--group ns="$(arg namespace2)">
-        <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_mapping)/maps/racemap.yaml" output="screen"/>
-
-
-        <include file="$(find qingzhou_nav)/launch/amcl_mutil.launch" />
-
-        <include file="$(find qingzhou_nav)/launch/qingzhou_move_base_teb_mutil.launch" >
+    <group ns="$(arg namespace2)">
+<node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_mapping)/maps/racemap.yaml" output="screen"/>
+        <include file="$(find qingzhou_nav)/launch/amcl_mutil.launch" >
+		<arg name="namespace" default="$(arg namespace2)" />
         </include>
 
-        <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav2.rviz"/>
-    </group-->
+	    <include file="$(find qingzhou_nav)/launch/qingzhou_move_base_teb_mutil.launch" >
+		<arg name="namespace" default="$(arg namespace2)" />
+        </include>
+<node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_2.rviz"/>
+        
+    </group>
 
 </launch>

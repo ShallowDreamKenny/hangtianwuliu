@@ -1,7 +1,7 @@
 TebLocalPlannerROS:
 
- odom_topic: odom
-    
+ odom_topic: /qingzhou_1/odom
+
  # Trajectory
   
  teb_autosize: True

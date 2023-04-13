@@ -1,6 +1,6 @@
 local_costmap:
-  global_frame: qingzhou1/odom #map
-  robot_base_frame: qingzhou1/base_link
+  global_frame: qingzhou_0/odom #map
+  robot_base_frame: qingzhou_0/base_link
   update_frequency: 6.0 #3
   publish_frequency: 4.0 #3
   static_map: false  # false
