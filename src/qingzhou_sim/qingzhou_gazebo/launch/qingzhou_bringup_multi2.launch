@@ -27,8 +27,8 @@
     <arg name="yaw1" default="0.0"/>
 
 
-    <arg name="world_name" value="$(find qingzhou_gazebo)/worlds/playground.world" />
-    <!--arg name="world_name" value="$(find qingzhou_gazebo)/worlds/myworld_V1.world" /-->
+    <!--arg name="world_name" value="$(find qingzhou_gazebo)/worlds/playground.world" /-->
+    <arg name="world_name" value="$(find qingzhou_gazebo)/worlds/myworld_V1.world" />
 
         <!-- Gazebo  -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">

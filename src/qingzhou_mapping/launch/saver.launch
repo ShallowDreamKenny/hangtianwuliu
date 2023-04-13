@@ -1,0 +1,7 @@
+<launch>
+    <arg name="file_name"   default="home/kenny/ROS/racemap"/>
+    <arg name="map_topic"   default="qingzhou_1/map"/>
+    <node pkg="map_server" type="map_saver" name="saver" args="-f $(arg file_name)" required="true" output="screen">
+        <remap from="map" to="$(arg map_topic)" />
+    </node>
+</launch>

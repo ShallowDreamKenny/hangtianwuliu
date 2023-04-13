@@ -29,4 +29,23 @@ rosrun rqt_robot_steering rqt_robot_steering
 
 step4:保存地图,在工作空间下新建终端:  
   cd ROS/qingzhou/src/qingzhou_mapping/maps/  
-  rosrun map_server map_saver -f racemap
+  rosrun map_server map_saver -f racemap /map:=/qingzhou_1/map
+
+nav  
+查看小车位姿 rostopic echo /qingzhou_0/amcl_pose  
+发送小车导航位置 rostopic pub /qingzmove_base_simple/goal geometry_msgs/PoseStamped "header:  
+seq: 0  
+stamp:  
+secs: 0  
+nsecs: 0
+frame_id: 'map'
+pose:
+position:
+x: 1.0    # 目标点的 x 坐标
+y: 1.0    # 目标点的 y 坐标
+z: 0.0
+orientation:
+x: 0.0
+y: 0.0
+z: 0.0
+w: 1.0"   # 目标点的姿态信息
