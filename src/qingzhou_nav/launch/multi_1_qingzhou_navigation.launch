@@ -77,7 +77,7 @@
         <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
         <remap from="odom" to="$(arg odom_topic)"/>
       </node>
-    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_2.rviz"/>
+    <!--node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_2.rviz"/-->
   </group>
 
 
