@@ -3,12 +3,16 @@
   <!-- Arguments -->
   <arg name="map_file" default="$(find qingzhou_mapping)/maps/racemap.yaml"/>
   
-  <include file="$(find qingzhou_nav)/launch/multi_0_qingzhou_navigation.launch">
-	  <arg name="map_file" default="$(arg map_file)" />
-  </include>
-  <include file="$(find qingzhou_nav)/launch/multi_1_qingzhou_navigation.launch">
-	  <arg name="map_file" default="$(arg map_file)" />
-  </include>
+    <include file="$(find qingzhou_nav)/launch/multi_0_qingzhou_navigation.launch">
+      <arg name="map_file" default="$(arg map_file)" />
+    </include>
+    <include file="$(find qingzhou_nav)/launch/multi_1_qingzhou_navigation.launch">
+      <arg name="map_file" default="$(arg map_file)" />
+    </include>
+    <include file="$(find qingzhou_nav)/launch/multi_2_qingzhou_navigation.launch">
+        <arg name="map_file" default="$(arg map_file)" />
+    </include>
+
   <!--include file="$(find qingzhou_nav)/launch/multi_2_qingzhou_navigation.launch">
 	  <arg name="model" value="$(arg model)" />
 	  <arg name="map_file" default="$(arg map_file)" />

@@ -8,7 +8,7 @@
   <arg name="robot2" default="qingzhou_1" />
   <arg name="robot3" default="qingzhou_2" />
   
-  <group ns = "$(arg robot1)">
+  <group ns = "$(arg robot3)">
   <!-- Map server -->
     <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
@@ -24,9 +24,9 @@
        <param name="transform_tolerance"       value="0.5"/>
        <param name="recovery_alpha_slow"       value="0.00"/>
        <param name="recovery_alpha_fast"       value="0.00"/>
-       <param name="initial_pose_x"            value="-1"/>
-       <param name="initial_pose_y"            value="-5.0"/>
-       <param name="initial_pose_a"            value="0"/>
+       <param name="initial_pose_x"            value="9"/>
+       <param name="initial_pose_y"            value="19.0"/>
+       <param name="initial_pose_a"            value="4.61"/>
        <param name="gui_publish_rate"          value="50.0"/>
 
        <remap from="scan"                      to="scan"/>
@@ -46,9 +46,9 @@
        <param name="odom_alpha2"               value="0.1"/>
        <param name="odom_alpha3"               value="0.1"/>
        <param name="odom_alpha4"               value="0.1"/>
-       <param name="odom_frame_id"             value="$(arg robot1)/odom"/>
-       <param name="base_frame_id"             value="$(arg robot1)/base_link"/>
-       <param name="laser_frame_id"            value="$(arg robot1)/ydlidar_link"/>
+       <param name="odom_frame_id"             value="$(arg robot3)/odom"/>
+       <param name="base_frame_id"             value="$(arg robot3)/base_link"/>
+       <param name="laser_frame_id"            value="$(arg robot3)/ydlidar_link"/>
      </node>
 
 
@@ -67,18 +67,17 @@
         <param name="controller_frequency" value="7.0" />
         <param name="controller_patience" value="0.2" />
 
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/costmap_common_params_1.yaml" command="load" ns="$(arg robot1)/global_costmap" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/costmap_common_params_1.yaml" command="load" ns="$(arg robot1)/local_costmap" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/local_costmap_params_1.yaml" command="load" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/global_costmap_params_1.yaml" command="load" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/teb_local_planner_params_1.yaml" command="load" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_0/global_planner_params.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/costmap_common_params_1.yaml" command="load" ns="$(arg robot3)/global_costmap" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/costmap_common_params_1.yaml" command="load" ns="$(arg robot3)/local_costmap" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/local_costmap_params_1.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/global_costmap_params_1.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/teb_local_planner_params_1.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_2/global_planner_params.yaml" command="load" />
 
         <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
         <remap from="odom" to="$(arg odom_topic)"/>
-        <!--remap from="map" to="map"/-->
       </node>
-    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_1.rviz"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_3.rviz"/>
   </group>
 
 

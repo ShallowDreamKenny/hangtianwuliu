@@ -67,17 +67,17 @@
         <param name="controller_frequency" value="7.0" />
         <param name="controller_patience" value="0.2" />
 
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/costmap_common_params_1.yaml" command="load" ns="$(arg robot2)/global_costmap" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/costmap_common_params_1.yaml" command="load" ns="$(arg robot2)/local_costmap" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/local_costmap_params_1.yaml" command="load" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/global_costmap_params_1.yaml" command="load" />
-        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/teb_local_planner_params_1.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/costmap_common_params.yaml" command="load" ns="$(arg robot2)/global_costmap" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/costmap_common_params.yaml" command="load" ns="$(arg robot2)/local_costmap" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/teb_local_planner_params.yaml" command="load" />
         <rosparam file="$(find qingzhou_nav)/params/qingzhou_1/global_planner_params.yaml" command="load" />
 
         <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
         <remap from="odom" to="$(arg odom_topic)"/>
       </node>
-    <!--node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_2.rviz"/-->
+    <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/nav_mutli_2.rviz"/>
   </group>
 
 
