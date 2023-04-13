@@ -18,7 +18,6 @@
     <rosparam file="$(find qingzhou_nav)/params/costmap_common_params_1.yaml" command="load" ns="$(arg namespace)/local_costmap" />
     <rosparam file="$(find qingzhou_nav)/params/local_costmap_params_1.yaml" command="load" />
     <rosparam file="$(find qingzhou_nav)/params/global_costmap_params_1.yaml" command="load" />
-    
     <rosparam file="$(find qingzhou_nav)/params/teb_local_planner_params_1.yaml" command="load" />
     <!-- <rosparam file="$(find qingzhou_nav)/params/costmap_converter_params.yaml" command="load" /> -->
     <rosparam file="$(find qingzhou_nav)/params/global_planner_params.yaml" command="load" />
