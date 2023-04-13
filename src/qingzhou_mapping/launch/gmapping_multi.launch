@@ -4,13 +4,13 @@
   <arg name="namespace2" default="qingzhou_1" />
   <arg name="first_tb3_x_pos" default="0.0"/>
   <arg name="first_tb3_y_pos" default="0.0"/>
-  <arg name="first_tb3_z_pos" default="1.0"/>
+  <arg name="first_tb3_z_pos" default="0.0"/>
   <arg name="first_tb3_yaw"   default="0.0"/>
 
-  <arg name="second_tb3_x_pos" default=" 1.0"/>
-  <arg name="second_tb3_y_pos" default="-5.0"/>
-  <arg name="second_tb3_z_pos" default=" 1.0"/>
-  <arg name="second_tb3_yaw"   default=" 0.0"/>
+  <arg name="second_tb3_x_pos" default="-1.0"/>
+  <arg name="second_tb3_y_pos" default="0.0"/>
+  <arg name="second_tb3_z_pos" default="0.0"/>
+  <arg name="second_tb3_yaw"   default="0.0"/>
 
   <group ns="$(arg namespace1)">
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping2"  clear_params="true">
@@ -104,6 +104,8 @@
 
     <node pkg="rviz" type="rviz" name="rviz2" args="-d $(arg rvizconfig)" required="true" />
   </group>
+
+
   <group ns="$(arg namespace1)/map_merge">
     <param name="init_pose_x"   value="$(arg first_tb3_x_pos)"/>
     <param name="init_pose_y"   value="$(arg first_tb3_y_pos)"/>
@@ -116,11 +118,11 @@
     <param name="init_pose_z"   value="$(arg second_tb3_z_pos)"/>
     <param name="init_pose_yaw" value="$(arg second_tb3_yaw)"  />
   </group>
-  <node pkg="tf" type="static_transform_publisher" name="tf_worldmap1" args="0 0 0 0 0 0 world qingzhou_0/map  33"/>
-  <node pkg="tf" type="static_transform_publisher" name="tf_worldmap2" args="1 -5 0 0 0 0 world qingzhou_1/map  33"/>
+  <node pkg="tf" type="static_transform_publisher" name="tf_worldmap1" args="0 0 0 0 0 0 map qingzhou_0/map  100"/>
+  <node pkg="tf" type="static_transform_publisher" name="tf_worldmap2" args="1 0 0 0 0 0 map qingzhou_1/map  100"/>
   <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
     <param name="merged_map_topic" value="map"/>
-    <param name="world_frame" value="world"/>
+    <param name="world_frame" value="map"/>
     <param name="robot_map_topic" value="map"/>
     <param name="robot_namespace" value="qingzhou"/>
     <param name="known_init_poses" value="true"/>

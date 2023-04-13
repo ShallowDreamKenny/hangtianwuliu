@@ -13,7 +13,7 @@
 
 
     <arg name="x2" default="1.0"/>
-    <arg name="y2" default="-5.0"/>
+    <arg name="y2" default="0.0"/>
     <arg name="z2" default="1.0" />
     <arg name="roll2" default="0.0"/>
     <arg name="pitch2" default="0.0"/>
@@ -53,13 +53,13 @@
         <node pkg="controller_manager" type="spawner" name="controller_spawner" ns="$(arg namespace1)"
               args="joint_state_publisher ackermann_steering_controller"
               output="screen" respawn="false" >
-            <param name="tf_prefix" value="$(arg namespace1)" />
+            <param name="tf_prefix" value="$(arg robot1)" />
         </node>
 
         <!-- Launch  the robot state publisher -->
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
             <param name="publish_frequency" value="50.0"/>
-            <param name="tf_prefix" value="$(arg namespace1)" />
+            <param name="tf_prefix" value="$(arg robot1)" />
         </node>
 
 
@@ -76,7 +76,7 @@
         <param name="robot_description" command="$(find xacro)/xacro $(arg model) namespace:=$(arg namespace2) bodyframe:=$(arg namespace2) " />
 
         <!-- Load ros_controllers configuration parameters -->
-        <rosparam file="$(find qingzhou_control)/config/ctrl_ackermann_steering_controller.yaml" command="load" ns="$(arg namespace2)" />
+        <rosparam file="$(find qingzhou_control)/config/ctrl_ackermann_steering_controller_2.yaml" command="load" ns="$(arg namespace2)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_gains.yaml" command="load" ns="$(arg namespace2)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_joint_state_publisher.yaml" command="load" ns="$(arg namespace2)" />
         <rosparam file="$(find qingzhou_control)/config/ctrl_qingzhou_hardware_gazebo.yaml" command="load" ns="$(arg namespace2)" />
@@ -85,13 +85,13 @@
         <node pkg="controller_manager" type="spawner" name="controller_spawner" ns="$(arg namespace2)"
               args="joint_state_publisher ackermann_steering_controller"
               output="screen" respawn="false" >
-            <param name="tf_prefix" value="$(arg namespace2)" />
+            <param name="tf_prefix" value="$(arg robot2)" />
         </node>
 
         <!-- Launch  the robot state publisher -->
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
             <param name="publish_frequency" value="50.0"/>
-            <param name="tf_prefix" value="$(arg namespace2)" />
+            <param name="tf_prefix" value="$(arg robot2)" />
         </node>
 
 
