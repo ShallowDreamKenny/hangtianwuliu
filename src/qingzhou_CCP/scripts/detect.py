@@ -14,7 +14,7 @@ import numpy as np
 import rospy
 import torch
 from cv_bridge import CvBridge
-from hwt_data.msg import Hwt_ht_basic
+from geometry_msgs.msg import PoseWithCovarianceStamped, PoseStamped
 from numpy import random
 from sensor_msgs.msg import Image
 
@@ -50,9 +50,16 @@ def args_set():
 
 def timer_callback1(event):
     try:
-        Vec.get_vector(Vec.color_image, "car1")
+        if Vec.get_vector(Vec.color_image, "car1"):
+            pose.header = poseC.header
+            pose.pose = poseC.pose.pose
+            print(pose)
+            pub_target.publish(pose)
+            return True
+
     except:
         print("data fusion faild")
+    return False
 
 def timer_callback2(event):
     try:
@@ -60,10 +67,20 @@ def timer_callback2(event):
     except:
         print("data fusion faild")
 
+def callback(msg):
+    poseC = msg
+
 if __name__ == '__main__':
     args = args_set()
     rospy.init_node('get_image', anonymous=True)
+    rospy.Subscriber("/qingzhou_1/amcl_pose", PoseWithCovarianceStamped, callback)
+
+    pub_target = rospy.Publisher('/qingzhou_2/move_base_simple/goal', PoseStamped, queue_size=1)
+
+    poseC = PoseWithCovarianceStamped()
+    pose = PoseStamped()
     Vec = Detector(args)
     while True:
-        timer_callback1(1)
+        if timer_callback1(1):
+            break
 
