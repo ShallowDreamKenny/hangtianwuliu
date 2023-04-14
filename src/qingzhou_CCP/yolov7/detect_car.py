@@ -8,6 +8,7 @@
 """
 import argparse
 import sys
+from socket import socket
 
 import cv2
 import numpy as np
@@ -63,13 +64,36 @@ class Detector():
         self.color_image2, self.depth_image2 = None, None
         self.old_img_b, self.old_img_h, self.old_img_w = None, None, None
 
+        self.clinet = socket()
+        self.clinet.connect(('10.41.25.151', 9090))
+        print(self.clinet.recv(1024).decode('utf-8'))
+
+        self.clinet1 = socket()
+        self.clinet1.connect(('10.41.25.151', 9090))
+        print(self.clinet1.recv(1024).decode('utf-8'))
+
+        self.clinet2 = socket()
+        self.clinet2.connect(('10.41.25.151', 9090))
+        print(self.clinet2.recv(1024).decode('utf-8'))
+
+        self.clinet3 = socket()
+        self.clinet3.connect(('10.41.25.151', 9090))
+        print(self.clinet3.recv(1024).decode('utf-8'))
+
+        self.clinet4 = socket()
+        self.clinet4.connect(('10.41.25.151', 9090))
+        print(self.clinet4.recv(1024).decode('utf-8'))
+
         rospy.Subscriber("qingzhou_1/camera_link/image_raw", Image, self.callback)
         rospy.Subscriber("qingzhou_0/camera_link/image_raw", Image, self.callback1)
+        rospy.Subscriber("qingzhou_2/camera_link/image_raw", Image, self.callback2)
         # rospy.Timer(rospy.Duration(.5), self.timer_callback)  # 2hz
         self.r = rospy.Rate(10)  # 10Hz
         # Init Model
         self.model, self.imgsz, self.device, self.half, self.view_img, \
             self.names, self.colors, self.stride = self.init_model(self.args)
+        self.n = 0
+
 
     """
     -------------------------------------
@@ -123,6 +147,13 @@ class Detector():
 
             cv2.imshow(name, img)
             cv2.waitKey(1)  # 1 millisecond
+            try:
+                self.send_img(img, "2", self.clinet)
+            except:
+                print("发送失败")
+                self.send_img(img, "2", self.clinet)
+
+
 
     def detect(self, img, name):
         img1 = letterbox(img, self.imgsz, stride=self.stride)[0]
@@ -161,14 +192,67 @@ class Detector():
         # Image Get
     -------------------------------------
     """
+########################################################
+        #socket
+
+
+#######################################################
+    def cv2bytes(self,im):
+        '''cv2转二进制图片
+
+        :param im: cv2图像，numpy.ndarray
+        :return: 二进制图片数据，bytes
+        '''
+        return np.array(cv2.imencode('.png', im)[1]).tobytes()
+
+    def send_img(self, img, num, clinet):
+        img = self.cv2bytes(img)
+        info_size = len(img)
+        # print("我已经发了头")
+        clinet.send((str(info_size) + ':' + str(num)).encode('utf-8'))
+        res = clinet.recv(1024).decode('utf-8')
+        if res == 'ok':
+            clinet.sendall(img)
+        res2 = clinet.recv(1024).decode('utf-8')
+        # print("我已经完全发了一个")
+
+    def send_pose(self, clinet):
+
+        # print("我已经发了头")
+        clinet.send((str(1) + ':' + str("pose")).encode('utf-8'))
+        res = clinet.recv(1024).decode('utf-8')
+        if res == 'ok':
+            clinet.sendall("1".encode('utf-8'))
+        res2 = clinet.recv(1024).decode('utf-8')
+        if res2 == "2":
+            return True
+        else:
+            return False
+
+
 
     def callback(self, data1):
         bridge = CvBridge()
         self.color_image = bridge.imgmsg_to_cv2(data1, 'bgr8')
 
+
+        # print(type(self.color_image))
+
     def callback1(self, data2):
         bridge = CvBridge()
         self.color_image2 = bridge.imgmsg_to_cv2(data2, 'bgr8')
+        try:
+            self.send_img(self.color_image2, "1", self.clinet1)
+        except:
+            print("发送失败")
+
+    def callback2(self, data3):
+        bridge = CvBridge()
+        self.color_image3 = bridge.imgmsg_to_cv2(data3, 'bgr8')
+        try:
+            self.send_img(self.color_image3, "3", self.clinet2)
+        except:
+            print("发送失败")
 
 
 
@@ -183,8 +267,9 @@ class Detector():
         pred = self.detect(image, name)
         pred = pred[0].numpy()
         if pred.shape[0] != 0:
-            print(pred)
-            return True
+            if self.send_pose(self.clinet3):
+                print(pred)
+                return True
         #print(pred)
         return False
 

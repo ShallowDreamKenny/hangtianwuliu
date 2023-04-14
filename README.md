@@ -1,21 +1,38 @@
 # qingzhou
+    git clone https://github.com/ShallowDreamKenny/qingzhou.git
+### 安装依赖
+
+```
 sudo apt install ros-melodic-ackermann-steering-controller      
 sudo apt-get install ros-(your ros version)-cartographer*     
-sudo apt-get install -y 
-cmake 
-g++ 
-git 
-google-mock 
-libboost-all-dev 
-libcairo2-dev 
-libeigen3-dev libgflags-dev 
-libgoogle-glog-dev 
-liblua5.2-dev 
-libsuitesparse-dev 
-libwebp-dev 
-ninja-build 
-protobuf-compiler 
-python-sphinx
+sudo apt-get install -y` 
+`cmake` 
+`g++` 
+`git` 
+`google-mock` 
+`libboost-all-dev` 
+`libcairo2-dev` 
+`libeigen3-dev libgflags-dev` 
+`libgoogle-glog-dev` 
+`liblua5.2-dev` 
+`libsuitesparse-dev` 
+`libwebp-dev` 
+`ninja-build` 
+`protobuf-compiler` 
+`python-sphinx`
+```
+
+### 在~/.bashrc中添加依赖
+
+```
+export PYTHONPATH=$PYTHONPATH:/home/kenny/ROS
+export PYTHONPATH=$PYTHONPATH:/home/kenny/ROS/qingzhou
+export PYTHONPATH=$PYTHONPATH:/home/kenny/ROS/qingzhou/src
+export PYTHONPATH=$PYTHONPATH:/home/kenny/ROS/qingzhou/src/qingzhou_CCP
+export PYTHONPATH=$PYTHONPATH:/home/kenny/ROS/qingzhou/src/qingzhou_CCP/yolov7
+```
+
+
 
 ### 多车建图
 #### step1:打开轻舟 gazebo 仿真世界,在工作空间下新建终端:
@@ -33,7 +50,7 @@ python-sphinx
     rosrun map_server map_saver -f racemap /map:=/qingzhou_1/map  
     rosrun map_server map_saver -f racemap /map:=/qingzhou_0/map  
 #### step5: 融合地图节点
-    cd qingzhou/src/qingzhou_mapping/scripts/  
+    cd qingzhou/src/qingzhou_mapping/scripts/concat_img  
     python3 merge.py
 
 ### 多车导航
@@ -44,7 +61,7 @@ python-sphinx
 #### Step3：启动目标检测、目标围堵、上位机通信节点  
     cd qingzhou/src/qingzhou_CCP/scripts/  
     python3 detect.py
-    打开上位机显示程序
+    打开上位机显示程序（须在windows端运行）（src/CSimg/main_ui/main.py）
 #### Step4: 使用全覆盖路径规划搜索目标或手动导航搜索目标
  ###### 全覆盖路径规划(待完善)
     cd qingzhou/src/qingzhou_CCP/src/  

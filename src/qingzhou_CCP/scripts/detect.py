@@ -49,10 +49,13 @@ def args_set():
     return parser.parse_args()
 
 def timer_callback1(event):
+    global poseC, pose
     try:
         if Vec.get_vector(Vec.color_image, "car1"):
             pose.header = poseC.header
+            # pose.header.frame_id = "map"
             pose.pose = poseC.pose.pose
+            pose.pose.position.x = pose.pose.position.x+1
             print(pose)
             pub_target.publish(pose)
             return True
@@ -63,11 +66,14 @@ def timer_callback1(event):
 
 def timer_callback2(event):
     try:
-        Vec.get_vector(Vec.color_image2, "car2")
+        Vec.send_img(img,"map",Vec.clinet4)
     except:
-        print("data fusion faild")
+        print("map tr faild")
 
+poseC = PoseWithCovarianceStamped()
+pose = PoseStamped()
 def callback(msg):
+    global poseC
     poseC = msg
 
 if __name__ == '__main__':
@@ -76,11 +82,12 @@ if __name__ == '__main__':
     rospy.Subscriber("/qingzhou_1/amcl_pose", PoseWithCovarianceStamped, callback)
 
     pub_target = rospy.Publisher('/qingzhou_2/move_base_simple/goal', PoseStamped, queue_size=1)
-
-    poseC = PoseWithCovarianceStamped()
-    pose = PoseStamped()
+    img = cv2.imread("res.png")
+    # poseC = PoseWithCovarianceStamped()
+    rospy.Timer(rospy.Duration(1), timer_callback2)
     Vec = Detector(args)
+
     while True:
         if timer_callback1(1):
-            break
+            print("实施围捕")
 
