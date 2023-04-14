@@ -1,5 +1,5 @@
 # qingzhou
-    git clone https://github.com/ShallowDreamKenny/qingzhou.git
+    git clone https://github.com/ShallowDreamKenny/hangtianwuliu.git
 ### 安装依赖
 
 ```
